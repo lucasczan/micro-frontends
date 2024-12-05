@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  app1:
+    build: 
+      context: ./app1
+    container_name: app1
+    expose:
+      - "80"
+    restart: always
+    networks:
+      - application
+  app2:
+    build:
+      context: ./app2
+    container_name: app2
+    expose:
+      - "3000"
+    networks:
+      - application
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    networks:
+      - application
+    ports:
+      - "3000:80"  # Mapeando a porta 80 do Nginx para a 3000 do host
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf # Montando o nginx.conf configurado
+      - ./dist:/usr/share/nginx/html
+    depends_on:
+      - app1
+      - app2
+      
+networks:
+  application:  # Definindo a rede personalizada 'application'
+    driver: bridge  # Usando o driver 'bridge' (padrão do Docker) para a rede
