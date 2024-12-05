@@ -21,6 +21,10 @@ const Home = () => {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <br /><br />
+        <button onClick={() => window.location.href = '/app2/'}>
+          Go to app2
+        </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
